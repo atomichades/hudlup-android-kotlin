@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="Btn_Primary">#8070FF</color>
+    <color name="Btn_Text">#FFFFFFFF</color>
+    <color name="Btn_Border">#8070FF</color>
+    <color name="Text_color">#FFFFFFFF</color>
+    <color name="EditText_Hint">#7B7B7B</color>
+    <color name="EditText_Border">#7B7B7B</color>
+    <color name="Transparent">#00FFFFFFFF</color>
+    <color name="BG">#343333</color>
+    <color name="Info_text">#7B7B7B</color>
+    <color name="Input_focus">#E2FD77</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
