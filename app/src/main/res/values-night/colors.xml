@@ -6,7 +6,7 @@
     <color name="Text_color">#FFFFFFFF</color>
     <color name="EditText_Hint">#7B7B7B</color>
     <color name="EditText_Border">#7B7B7B</color>
-    <color name="Transparent">#00FFFFFFFF</color>
+    <color name="Transparent">#00FFFFFF</color>
     <color name="BG">#343333</color>
     <color name="Info_text">#7B7B7B</color>
     <color name="Input_focus">#E2FD77</color>

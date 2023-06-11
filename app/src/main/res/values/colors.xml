@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="Btn_Primary">#8070FF</color>
+    <color name="Btn_Primary_Ripple">#9486fc</color>
+    <color name="Btn_Secondary_Ripple">#504f4f</color>
     <color name="Btn_Text">#FFFFFFFF</color>
     <color name="Btn_Border">#8070FF</color>
     <color name="Text_color">#FFFFFFFF</color>
     <color name="EditText_Hint">#7B7B7B</color>
     <color name="EditText_Border">#7B7B7B</color>
-    <color name="Transparent">#00FFFFFFFF</color>
+    <color name="Transparent">#00FFFFFF</color>
     <color name="BG">#343333</color>
     <color name="Info_text">#7B7B7B</color>
     <color name="Input_focus">#E2FD77</color>
