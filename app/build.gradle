@@ -6,7 +6,6 @@ plugins {
 android {
     namespace 'com.example.hudlup'
     compileSdk 33
-
     defaultConfig {
         applicationId "com.example.hudlup"
         minSdk 30
@@ -22,6 +21,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
