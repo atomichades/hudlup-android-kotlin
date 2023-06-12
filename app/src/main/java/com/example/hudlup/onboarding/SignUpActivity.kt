@@ -2,8 +2,6 @@ package com.example.hudlup.onboarding
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.hudlup.R
-import com.example.hudlup.databinding.ActivityForgottenPasswordBinding
 import com.example.hudlup.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
