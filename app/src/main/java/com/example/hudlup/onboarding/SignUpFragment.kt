@@ -5,24 +5,26 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.example.hudlup.R
 import com.example.hudlup.databinding.FragmentForgottenPasswordBinding
-import com.example.hudlup.databinding.FragmentLoginBinding
+import com.example.hudlup.databinding.FragmentSignUpBinding
 
-class ForgottenPasswordFragment : Fragment() {
-    private var _binding: FragmentForgottenPasswordBinding ? = null
-    private val binding get() = _binding!!
+private var _binding: FragmentSignUpBinding? = null
+private val binding get() = _binding!!
+class SignUpFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentForgottenPasswordBinding.inflate(inflater, container, false)
+        _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
     }
@@ -40,6 +42,6 @@ class ForgottenPasswordFragment : Fragment() {
     }
 
     companion object TAG {
-        const val TAG: String = "ForgottenPasswordFragment"
+        const val TAG: String = "SignUpFragment"
     }
 }
