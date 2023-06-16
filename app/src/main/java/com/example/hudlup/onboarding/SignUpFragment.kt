@@ -5,10 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.example.hudlup.R
-import com.example.hudlup.databinding.FragmentForgottenPasswordBinding
 import com.example.hudlup.databinding.FragmentSignUpBinding
 
 private var _binding: FragmentSignUpBinding? = null
@@ -23,7 +20,7 @@ class SignUpFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         val view = binding.root
         return view
@@ -33,6 +30,7 @@ class SignUpFragment : Fragment() {
 //        setupButtons()
         _binding?.toolbar?.setNavigationOnClickListener {
             NavHostFragment.findNavController(this).popBackStack()
+
         }
     }
 

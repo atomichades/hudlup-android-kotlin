@@ -23,6 +23,12 @@
         <item name="android:autoSizeMaxTextSize">24sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+    <style name="Paragraph1">
+        <item name="android:textColor">@color/Text_color</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:autoSizeMinTextSize">14sp</item>
+        <item name="android:autoSizeMaxTextSize">16sp</item>
+    </style>
     <style name="editText">
         <item name="android:textColor">@color/Btn_Text</item>
         <item name="android:textSize">16sp</item>
