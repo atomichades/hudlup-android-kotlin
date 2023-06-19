@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import androidx.navigation.fragment.NavHostFragment
 import com.example.hudlup.onboarding.LoginFragment
+import com.google.firebase.FirebaseApp
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 //                .add(R.id.main_content, fragment, LoginFragment.TAG)
 //                .commit()
 //        }
-
+        FirebaseApp.initializeApp(this)
         //setup supportToolBar
         val supportToolac = supportActionBar
         supportToolac?.title = "Sign Up"

@@ -19,7 +19,7 @@ class ForgottenPasswordFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupClickActions()
+
     }
 
     override fun onCreateView(
@@ -32,10 +32,11 @@ class ForgottenPasswordFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        setupButtons()
+        setupClickActions()
         _binding?.toolbar?.setNavigationOnClickListener {
             NavHostFragment.findNavController(this).popBackStack()
         }
+
     }
 
     override fun onDestroyView() {
@@ -45,10 +46,14 @@ class ForgottenPasswordFragment : Fragment() {
 
     fun setupClickActions(){
         binding.resetBtn.setOnClickListener {
-            Firebase.auth.sendPasswordResetEmail(binding.emailEditTxt.text.toString()).addOnCompleteListener {
-                binding.para1.setText(R.string.passwordResetComplete)
-                Thread.sleep(4000)
-                NavHostFragment.findNavController(this).popBackStack()
+            if (binding.emailEditTxt.text.isEmpty()){
+                binding.emailEditTxt.setError("You must enter an email address")
+            }else {
+                Firebase.auth.sendPasswordResetEmail(binding.emailEditTxt.text.toString()).addOnCompleteListener {
+                    binding.para1.setText(R.string.passwordResetComplete)
+                    Thread.sleep(4000)
+                    NavHostFragment.findNavController(this).popBackStack()
+            }
             }
         }
     }
