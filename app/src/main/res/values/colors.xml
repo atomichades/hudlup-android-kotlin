@@ -6,6 +6,8 @@
     <color name="Btn_Text">#FFFFFFFF</color>
     <color name="Btn_Border">#8070FF</color>
     <color name="Text_color">#FFFFFFFF</color>
+    <color name="Positive_Text_color">#9DCC97</color>
+    <color name="Negative_Text_color">#F57777</color>
     <color name="EditText_Hint">#7B7B7B</color>
     <color name="EditText_Border">#7B7B7B</color>
     <color name="Transparent">#00FFFFFF</color>
