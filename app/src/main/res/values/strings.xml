@@ -16,5 +16,6 @@
     <string name="last_name">Last name</string>
     <string name="email_str">Email</string>
     <string name="age_18">Age (18+)</string>
+    <string name="passwordResetComplete">It you have an account with us, a password reset link has been sent to your inbox</string>
     <string name="confirm_password">Confirm Password</string>
 </resources>

@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.example.hudlup.R
 import com.example.hudlup.databinding.FragmentForgottenPasswordBinding
 import com.example.hudlup.databinding.FragmentLoginBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class ForgottenPasswordFragment : Fragment() {
     private var _binding: FragmentForgottenPasswordBinding ? = null
@@ -16,6 +19,7 @@ class ForgottenPasswordFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupClickActions()
     }
 
     override fun onCreateView(
@@ -37,6 +41,16 @@ class ForgottenPasswordFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun setupClickActions(){
+        binding.resetBtn.setOnClickListener {
+            Firebase.auth.sendPasswordResetEmail(binding.emailEditTxt.text.toString()).addOnCompleteListener {
+                binding.para1.setText(R.string.passwordResetComplete)
+                Thread.sleep(4000)
+                NavHostFragment.findNavController(this).popBackStack()
+            }
+        }
     }
 
     companion object TAG {
