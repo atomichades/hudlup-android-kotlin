@@ -12,10 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Hudlup"
         tools:targetApi="31">
-        <activity
-            android:name=".onboarding.SignUpActivity"
-            android:exported="false"
-           />
 
         <activity
             android:name=".MainActivity"
