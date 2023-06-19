@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "292074465047",
+    "project_id": "hudle-up",
+    "storage_bucket": "hudle-up.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:292074465047:android:a69f17c9e2df73ec42f952",
+        "android_client_info": {
+          "package_name": "com.example.hudlup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "292074465047-gjr523fftl4npf8hsb0ikheju7tpofvd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hudlup",
+            "certificate_hash": "ca2a0c2f95c02fde27df77671ab5dfdc0e7e36a0"
+          }
+        },
+        {
+          "client_id": "292074465047-9ve1a7k9hd95q2lj3evr8he9r3up8k2e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI5rXgGXtyE5Z7ogdJYxgo2WiD7-MsaKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "292074465047-9ve1a7k9hd95q2lj3evr8he9r3up8k2e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
