@@ -91,6 +91,7 @@
             app:layout_constraintHeight_max="75dp"
             app:layout_constraintHeight_min="50dp"
             android:id="@+id/emailEditTxt"
+            android:maxLength="25"
             style="@style/editText"
             android:hint="@string/email"
             android:background="@drawable/rounded_edittext_states"

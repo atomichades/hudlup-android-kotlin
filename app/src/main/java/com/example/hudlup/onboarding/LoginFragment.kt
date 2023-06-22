@@ -51,9 +51,9 @@ class LoginFragment : Fragment() {
             //TODO: abstract into view model
             var result = false;
             if (binding.emailEditTxt.text.isEmpty()){
-                binding.emailEditTxt.setError("Must not be empty")
-            }else if (TextValidator.isEmailAddress(binding.emailEditTxt.text.toString())){
-                binding.emailEditTxt.setError("Must be a valid email address")
+                binding.emailEditTxt.error = "Must not be empty"
+            }else if (!TextValidator.isEmailAddress(binding.emailEditTxt.text.toString())){
+                binding.emailEditTxt.error = "Must be a valid email address"
             }
             if (binding.passwordEditTxt.text.isEmpty()){
                 binding.passwordEditTxt.setError("Must not be empty")

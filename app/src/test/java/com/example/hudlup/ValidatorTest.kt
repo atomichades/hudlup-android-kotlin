@@ -19,5 +19,6 @@ class ValidatorTest {
         assertEquals(false, TextValidator.isEmailAddress("abc@gmailcom"))
         assertEquals(false, TextValidator.isEmailAddress("abcgmail.com"))
         assertEquals(false, TextValidator.isEmailAddress("abcgmailcom"))
+        assertEquals(false, TextValidator.isEmailAddress("abc123"))
     }
 }
