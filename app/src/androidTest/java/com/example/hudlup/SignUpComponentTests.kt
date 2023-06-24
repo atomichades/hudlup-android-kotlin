@@ -36,10 +36,21 @@ class SignUpComponentTests {
                 .matches(ViewMatchers.hasErrorText("You must enter your age")))
         Espresso.onView(ViewMatchers.withId(R.id.password1EditTxt)).check(
             ViewAssertions
-                .matches(ViewMatchers.hasErrorText("You must enter your password")))
-        Espresso.onView(ViewMatchers.withId(R.id.password2EditTxt)).check(
+                .matches(ViewMatchers.hasErrorText("You must enter a password")))
+
+    }
+
+    @Test
+    fun testPasswordDoesntMatchError(){
+        Espresso.onView(ViewMatchers.withId(R.id.password1EditTxt))
+            .perform(ViewActions.typeText("asda123"))
+        Espresso.onView(ViewMatchers.withId(R.id.password2EditTxt))
+            .perform(ViewActions.typeText("asda12345"))
+        Espresso.onView(ViewMatchers.isRoot()).perform(ViewActions.closeSoftKeyboard())
+        Espresso.onView(ViewMatchers.withId(R.id.signUp_btn)).perform(ViewActions.click())
+        Espresso.onView(ViewMatchers.withId(R.id.password1EditTxt)).check(
             ViewAssertions
-                .matches(ViewMatchers.hasErrorText("You must enter your password")))
+                .matches(ViewMatchers.hasErrorText("Your passwords do not match")))
     }
 
 }
