@@ -54,12 +54,12 @@ class SignUpFragment : Fragment() {
         // Setup sign up button
         binding.signUpBtn.setOnClickListener {
             if (checkAndSetUIFieldsIfErrored()){
-                Firebase.auth.createUserWithEmailAndPassword(binding.firstnameEditTxt.text.toString(), binding.password1EditTxt.text.toString()).addOnCompleteListener { task ->
+                Firebase.auth.createUserWithEmailAndPassword(binding.emailEditTxt.text.toString(), binding.password1EditTxt.text.toString()).addOnCompleteListener { task ->
                     if (task.isSuccessful){
                         animateSignInBtnSuccessful()
                         task.result.user?.sendEmailVerification()?.addOnCompleteListener { task ->
                             if (task.isSuccessful){
-                                Toast.makeText(context,"You must verify your email in order to continue", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context,"All done! We just need you to verify your email before you continue", Toast.LENGTH_LONG).show()
                                 SharedPreferenceManager.StoreUserDetailsOnSignUp(binding.firstnameEditTxt.text.toString(),binding.lastnameEditTxt.text.toString(),binding.ageEditTxt.text.toString().toInt())
                                 NavHostFragment.findNavController(this).popBackStack()
                             }
