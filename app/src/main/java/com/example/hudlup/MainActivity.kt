@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHost
 import androidx.navigation.fragment.NavHostFragment
 import com.example.hudlup.onboarding.LoginFragment
+import com.example.hudlup.util.SharedPreferenceManager
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -21,14 +22,16 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
         FirebaseApp.initializeApp(this)
         //check if user is signed in:
-        val user = Firebase.auth.currentUser
-        if (user != null) {
-            // User is signed in
-            Log.d("Auth", "User is signed in")
-        } else {
-            // No user is signed in
-            Log.d("Auth", "User is not signed in")
-        }
+//        val user = Firebase.auth.currentUser
+//        if (user != null) {
+//            // User is signed in
+//            Log.d("Auth", "User is signed in")
+//        } else {
+//            // No user is signed in
+//            Log.d("Auth", "User is not signed in")
+//        }
+        //set SharedPref Singleton
+        SharedPreferenceManager.init(applicationContext)
         //setup supportToolBar
         val supportToolac = supportActionBar
         supportToolac?.title = "Sign Up"

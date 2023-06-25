@@ -22,12 +22,4 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    fun storeUserData(firstname: String, lastname:String, age:Int){
-
-    }
-
-
-    companion object {
-
-    }
 }

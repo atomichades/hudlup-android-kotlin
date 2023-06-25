@@ -1,6 +1,7 @@
 package com.example.hudlup.onboarding
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.hudlup.databinding.FragmentSignUpBinding
+import com.example.hudlup.util.SharedPreferenceManager
 import com.example.hudlup.util.TextValidator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -48,48 +50,52 @@ class SignUpFragment : Fragment() {
     fun setupOnClicks(){
         binding.signUpBtn.setOnClickListener {
             if (checkAndSetUIFieldsIfErrored()){
-                Firebase.auth.createUserWithEmailAndPassword(binding.firstnameEditTxt.text.toString(), binding.password1EditTxt.text.toString()).addOnCompleteListener { task ->{
+                Firebase.auth.createUserWithEmailAndPassword(binding.firstnameEditTxt.text.toString(), binding.password1EditTxt.text.toString()).addOnCompleteListener { task ->
                     if (task.isSuccessful){
-
+                        SharedPreferenceManager.StoreUserDetailsOnSignUp(binding.firstnameEditTxt.text.toString(),binding.lastnameEditTxt.text.toString(),binding.ageEditTxt.text.toString().toInt())
+                        NavHostFragment.findNavController(this).popBackStack()
                     }else {
 
                     }
-                } }
+                 }
             }
         }
     }
 
     fun checkAndSetUIFieldsIfErrored() : Boolean {
-        var result =true
-        if (binding.firstnameEditTxt.text.isEmpty()||TextValidator.hasSpecialCharacters(binding.firstnameEditTxt.text.toString())){
-            binding.firstnameEditTxt.error = "You must enter a valid firstname"
-            result = false
-        }
-        if (binding.lastnameEditTxt.text.isEmpty()||TextValidator.hasSpecialCharacters(binding.lastnameEditTxt.text.toString())){
-            binding.lastnameEditTxt.error = "You must enter a valid lastname"
-            result = false
-        }
-        if (binding.ageEditTxt.text.isEmpty()){
-            binding.ageEditTxt.error = "You must enter your age"
-            result = false
-        }else if (viewModel.checkAgeIsOver18(binding.ageEditTxt.toString())){
-            binding.ageEditTxt.error = "You must be over 18"
-        }
-        if (binding.emailEditTxt.text.isEmpty()){
-            binding.emailEditTxt.error = "You must enter your email address"
-            result = false
-        }
-        if (TextValidator.isEmailAddress(binding.emailEditTxt.text.toString())){
-            binding.emailEditTxt.error = "This does not look like a valid email"
-            result = false
-        }
-        if (binding.password1EditTxt.text.isEmpty()){
-            binding.password1EditTxt.error = "You must enter a password"
-        } else if (binding.password2EditTxt.text.isEmpty()){
-            binding.password2EditTxt.error = "You must enter a password"
-        }else if (!viewModel.checkPasswordMatches(binding.password1EditTxt.text.toString(),binding.password2EditTxt.text.toString())){
-            binding.password1EditTxt.error = "Your passwords do not match"
-            binding.password2EditTxt.error = "Your passwords do not match"
+        var result = true
+        with(binding) {
+            if (firstnameEditTxt.text.isEmpty() || TextValidator.hasSpecialCharacters(firstnameEditTxt.text.toString())) {
+                firstnameEditTxt.error = "You must enter a valid firstname"
+                result = false
+            }
+            if (lastnameEditTxt.text.isEmpty() || TextValidator.hasSpecialCharacters(lastnameEditTxt.text.toString())) {
+                lastnameEditTxt.error = "You must enter a valid lastname"
+                result = false
+            }
+            if (ageEditTxt.text.isEmpty()) {
+                ageEditTxt.error = "You must enter your age"
+                result = false
+            } else if (viewModel.checkAgeIsOver18(ageEditTxt.toString())) {
+                ageEditTxt.error = "You must be over 18"
+            }
+
+            if (emailEditTxt.text.isEmpty()) {
+                emailEditTxt.error = "You must enter your email address"
+                result = false
+            } else if (!TextValidator.isEmailAddress(emailEditTxt.text.toString())) {
+                emailEditTxt.error = "This does not look like a valid email"
+                result = false
+            }
+
+            if (password1EditTxt.text.isEmpty()) {
+                password1EditTxt.error = "You must enter a password"
+            } else if (password2EditTxt.text.isEmpty()) {
+                password2EditTxt.error = "You must enter a password"
+            } else if (!viewModel.checkPasswordMatches(password1EditTxt.text.toString(), password2EditTxt.text.toString())) {
+                password1EditTxt.error = "Your passwords do not match"
+                password2EditTxt.error = "Your passwords do not match"
+            }
         }
 
         return result

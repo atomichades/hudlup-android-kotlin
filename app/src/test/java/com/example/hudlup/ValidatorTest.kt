@@ -16,9 +16,19 @@ class ValidatorTest {
     @Test
     fun testIfEmailValidates(){
         assertEquals(true, TextValidator.isEmailAddress("abc@gmail.com"))
+        assertEquals(true, TextValidator.isEmailAddress("atomichades@gmail.com"))
         assertEquals(false, TextValidator.isEmailAddress("abc@gmailcom"))
         assertEquals(false, TextValidator.isEmailAddress("abcgmail.com"))
         assertEquals(false, TextValidator.isEmailAddress("abcgmailcom"))
         assertEquals(false, TextValidator.isEmailAddress("abc123"))
+    }
+
+    @Test
+    fun testIfStringIsMadeLowerCaseWithFirstLetterUpperCase(){
+        assertEquals("James", TextValidator.MakeStringAllLowerCaseAndFirstLetterUppercase("James"))
+        assertEquals("James", TextValidator.MakeStringAllLowerCaseAndFirstLetterUppercase("james"))
+        assertEquals("James", TextValidator.MakeStringAllLowerCaseAndFirstLetterUppercase("james   "))
+        assertEquals("James", TextValidator.MakeStringAllLowerCaseAndFirstLetterUppercase("   james"))
+        assertEquals("James", TextValidator.MakeStringAllLowerCaseAndFirstLetterUppercase("jaMes"))
     }
 }
