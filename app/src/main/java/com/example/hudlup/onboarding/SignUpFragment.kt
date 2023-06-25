@@ -1,17 +1,20 @@
 package com.example.hudlup.onboarding
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
+import android.animation.ObjectAnimator
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.LinearInterpolator
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.hudlup.databinding.FragmentSignUpBinding
 import com.example.hudlup.util.SharedPreferenceManager
 import com.example.hudlup.util.TextValidator
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -48,18 +51,47 @@ class SignUpFragment : Fragment() {
     }
 
     fun setupOnClicks(){
+        // Setup sign up button
         binding.signUpBtn.setOnClickListener {
             if (checkAndSetUIFieldsIfErrored()){
                 Firebase.auth.createUserWithEmailAndPassword(binding.firstnameEditTxt.text.toString(), binding.password1EditTxt.text.toString()).addOnCompleteListener { task ->
                     if (task.isSuccessful){
-                        SharedPreferenceManager.StoreUserDetailsOnSignUp(binding.firstnameEditTxt.text.toString(),binding.lastnameEditTxt.text.toString(),binding.ageEditTxt.text.toString().toInt())
-                        NavHostFragment.findNavController(this).popBackStack()
-                    }else {
+                        animateSignInBtnSuccessful()
+                        task.result.user?.sendEmailVerification()?.addOnCompleteListener { task ->
+                            if (task.isSuccessful){
+                                Toast.makeText(context,"You must verify your email in order to continue", Toast.LENGTH_LONG).show()
+                                SharedPreferenceManager.StoreUserDetailsOnSignUp(binding.firstnameEditTxt.text.toString(),binding.lastnameEditTxt.text.toString(),binding.ageEditTxt.text.toString().toInt())
+                                NavHostFragment.findNavController(this).popBackStack()
+                            }
+                        }
 
+                    }else {
+                        Toast.makeText(context,"There was an error with your sign up: ${task.exception}", Toast.LENGTH_LONG).show()
+                        binding.signUpBtn.isEnabled = true
                     }
                  }
             }
         }
+    }
+
+    fun animateSignInBtnSuccessful(){
+        binding.signUpBtn.isEnabled = false // Disable button
+        binding.tickImageView.visibility = View.INVISIBLE
+        binding.progressBar.progress = 0 // reset progress
+        binding.progressBar.visibility = View.VISIBLE
+        val anim = ObjectAnimator.ofInt(binding.progressBar, "progress", 0, 100)
+        anim.duration = 2000 // Set the desired animation duration
+        binding.signUpBtn.text = "Signing up..."
+        anim.addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                binding.progressBar.visibility = View.GONE // Hide the progress bar
+                binding.signUpBtn.text = "" // Clear the button text
+                binding.tickImageView.visibility = View.VISIBLE // Make the tick visible
+            }
+        })
+        val interpolator = LinearInterpolator()
+        anim.interpolator = interpolator
+        anim.start()
     }
 
     fun checkAndSetUIFieldsIfErrored() : Boolean {
