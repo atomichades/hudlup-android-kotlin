@@ -49,8 +49,10 @@ class ForgottenPasswordFragment : Fragment() {
             if (binding.emailEditTxt.text.isEmpty()){
                 binding.emailEditTxt.setError("You must enter an email address")
             }else {
+                binding.para1.setText(R.string.passwordResetComplete)
+                binding.para1.visibility = View.VISIBLE
+                binding.resetBtn.animateSignInBtnSuccessful("Attempting to reset", 4000)
                 Firebase.auth.sendPasswordResetEmail(binding.emailEditTxt.text.toString()).addOnCompleteListener {
-                    binding.para1.setText(R.string.passwordResetComplete)
                     Thread.sleep(4000)
                     NavHostFragment.findNavController(this).popBackStack()
             }

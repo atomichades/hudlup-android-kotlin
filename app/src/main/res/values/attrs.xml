@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ProgressButton">
+        <attr name="buttonText" format="string"/>
+        <attr name="passOrFail" format="boolean" default = "true"/>
+        <attr name="completeText" format="string" default = ""/>
+        <attr name="time" format="integer" default ="4000"/>
+    </declare-styleable>
+</resources>
