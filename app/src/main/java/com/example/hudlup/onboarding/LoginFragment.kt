@@ -3,6 +3,7 @@ package com.example.hudlup.onboarding
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -10,6 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,7 +21,12 @@ import androidx.navigation.findNavController
 import com.example.hudlup.R
 import com.example.hudlup.databinding.FragmentLoginBinding
 import com.example.hudlup.util.TextValidator
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.crashlytics.CrashlyticsRegistrar
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
@@ -71,6 +80,41 @@ class LoginFragment : Fragment() {
                         binding.error.visibility = View.VISIBLE
                     }
                 }
+            }
+        }
+
+        binding.googleLoginBtn.setOnClickListener {
+            lateinit var googleSignInClient: GoogleSignInClient
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail().build()
+            googleSignInClient = GoogleSignIn.getClient(requireActivity(),gso)
+            val signInIntent = googleSignInClient.signInIntent
+//            registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult() ){
+//            }.launch(IntentSenderRequest.Builder(signInIntent.).build())
+            startActivityForResult(signInIntent, 123)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 123) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                // Signed in successfully, update UI accordingly
+                val firebaseCredential = GoogleAuthProvider.getCredential(account.idToken,null)
+                FirebaseAuth.getInstance().signInWithCredential(firebaseCredential).addOnCompleteListener { task ->
+                    if (task.isSuccessful){
+                        //TODO: Call user data from db
+
+                    } else {
+
+                    }
+                }
+            } catch (e: ApiException) {
+                // Sign in failed, update UI accordingly
+                //TODO: Build in crashalytics
+                // TODO: Update UI based on feedback
             }
         }
     }

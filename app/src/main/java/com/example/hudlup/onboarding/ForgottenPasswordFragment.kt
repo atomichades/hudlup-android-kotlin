@@ -9,7 +9,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.example.hudlup.R
 import com.example.hudlup.databinding.FragmentForgottenPasswordBinding
-import com.example.hudlup.databinding.FragmentLoginBinding
+
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 

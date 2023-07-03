@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import com.example.hudlup.onboarding.LoginFragment
 import com.example.hudlup.util.SharedPreferenceManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -39,4 +40,5 @@ class MainActivity : AppCompatActivity() {
         supportToolac?.setDisplayHomeAsUpEnabled(true)
 
     }
+
 }
