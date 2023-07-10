@@ -3,6 +3,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
+import javax.annotation.Nullable
 
 
 object SharedPreferenceManager  {
@@ -15,10 +16,11 @@ object SharedPreferenceManager  {
         }
     }
 
-    fun StoreUserDetailsOnSignUp(firstName:String, lastName:String, age:Int){
+    fun StoreUserDetailsOnSignUp(firstName:String, lastName:String, age:Int, photoURL:String?){
         editor.putString("firstname", TextValidator.MakeStringAllLowerCaseAndFirstLetterUppercase(firstName))
         editor.putString("lastname", TextValidator.MakeStringAllLowerCaseAndFirstLetterUppercase(lastName))
         editor.putInt("age", age)
+        editor.putString("Photo_URL", photoURL)
         editor.apply()
     }
 

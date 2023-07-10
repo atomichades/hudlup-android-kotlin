@@ -8,6 +8,10 @@ plugins {
 android {
     namespace 'com.example.hudlup'
     compileSdk 33
+    //REQUIRED TO STORE API KEYS
+    def apikeyPropertiesFile = rootProject.file("apiKey.properties")
+    def apiKeyProperties = new Properties()
+    apiKeyProperties.load(new FileInputStream(apikeyPropertiesFile))
     defaultConfig {
         applicationId "com.example.hudlup"
         minSdk 30
@@ -15,6 +19,8 @@ android {
         versionCode 1
         versionName "0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String","GOOGLE_FIREBASE_CLOUD_KEY", apiKeyProperties['GOOGLE_FIREBASE_CLOUD_KEY'])
+        buildConfigField("String","GOOGLE_CLOUD_AUTH_KEY", apiKeyProperties['GOOGLE_CLOUD_AUTH_KEY'])
     }
 
     buildTypes {
@@ -49,12 +55,13 @@ dependencies {
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
-    implementation 'com.google.android.gms:play-services-auth:20.6.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
     implementation("com.google.android.gms:play-services-auth:20.6.0") // Google Auth
+    implementation 'com.google.api-client:google-api-client:1.32.1'
+    implementation 'com.google.apis:google-api-services-people:v1-rev621-1.32.1'
     testImplementation 'junit:junit:4.13.2'
     debugImplementation 'androidx.fragment:fragment-testing:1.6.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

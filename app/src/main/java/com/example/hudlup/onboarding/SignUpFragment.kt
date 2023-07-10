@@ -60,7 +60,7 @@ class SignUpFragment : Fragment() {
                         task.result.user?.sendEmailVerification()?.addOnCompleteListener { task ->
                             if (task.isSuccessful){
                                 Toast.makeText(context,"All done! We just need you to verify your email before you continue", Toast.LENGTH_LONG).show()
-                                SharedPreferenceManager.StoreUserDetailsOnSignUp(binding.firstnameEditTxt.text.toString(),binding.lastnameEditTxt.text.toString(),binding.ageEditTxt.text.toString().toInt())
+                                SharedPreferenceManager.StoreUserDetailsOnSignUp(binding.firstnameEditTxt.text.toString(),binding.lastnameEditTxt.text.toString(),binding.ageEditTxt.text.toString().toInt(), null)
                                 NavHostFragment.findNavController(this).popBackStack()
                             }
                         }

@@ -3,33 +3,42 @@ package com.example.hudlup.onboarding
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
+import android.app.Person
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.LinearInterpolator
-import androidx.activity.result.IntentSenderRequest
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.hudlup.BuildConfig
 import com.example.hudlup.R
 import com.example.hudlup.databinding.FragmentLoginBinding
 import com.example.hudlup.util.TextValidator
+import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.Scope
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
+import com.google.api.client.http.HttpTransport
+import com.google.api.client.http.javanet.NetHttpTransport
+import com.google.api.client.json.JsonFactory
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.crashlytics.CrashlyticsRegistrar
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
+import java.io.InputStream
+import kotlin.math.sign
 
 
 class LoginFragment : Fragment() {
@@ -86,11 +95,12 @@ class LoginFragment : Fragment() {
         binding.googleLoginBtn.setOnClickListener {
             lateinit var googleSignInClient: GoogleSignInClient
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail().build()
+                .requestEmail()
+                .requestIdToken(BuildConfig.GOOGLE_FIREBASE_CLOUD_KEY)
+                .requestProfile()
+                .build()
             googleSignInClient = GoogleSignIn.getClient(requireActivity(),gso)
             val signInIntent = googleSignInClient.signInIntent
-//            registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult() ){
-//            }.launch(IntentSenderRequest.Builder(signInIntent.).build())
             startActivityForResult(signInIntent, 123)
         }
     }
@@ -101,24 +111,60 @@ class LoginFragment : Fragment() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)
+                val idToken = account.idToken
+                val accessToken = account.serverAuthCode
                 // Signed in successfully, update UI accordingly
-                val firebaseCredential = GoogleAuthProvider.getCredential(account.idToken,null)
+                 val firebaseCredential = GoogleAuthProvider.getCredential(account.idToken,null)
                 FirebaseAuth.getInstance().signInWithCredential(firebaseCredential).addOnCompleteListener { task ->
                     if (task.isSuccessful){
                         //TODO: Call user data from db
-
+                        Log.d("Auth", "Success: "+task.result.user.toString())
+                        val scopes: Set<Scope> = account.grantedScopes
+                        for (scope in scopes){
+                            Log.d("Auth", "Scopes:$scope")
+                        }
+//                        SharedPreferenceManager.StoreUserDetailsOnSignUp(account.givenName,account.familyName,null, account.photoUrl)
+                        animateSignInBtnSuccessful{
+                            //TODO: Grab user data from DB
+                            view?.findNavController()?.navigate(R.id.action_loginFragment_to_hub)
+                        }
                     } else {
-
+                        Log.d("Auth", "Error:"+task.exception)
                     }
                 }
             } catch (e: ApiException) {
                 // Sign in failed, update UI accordingly
+                Log.d("Auth", "Error:"+e.toString())
                 //TODO: Build in crashalytics
                 // TODO: Update UI based on feedback
             }
         }
     }
-
+//
+//    suspend fun fetchUserBirthdate(): List<Person.Birthday>? {
+//        val httpTransport: HttpTransport = GoogleNetHttpTransport.newTrustedTransport()
+//        val jsonFactory: JsonFactory = JacksonFactory.getDefaultInstance()
+//
+//        // Set up the Google credentials
+//        val credentials: GoogleCredential = GoogleCredential.getApplicationDefault(httpTransport, jsonFactory)
+//
+//        // Set up the Google People API service
+//        val peopleService: PeopleService = PeopleService.Builder(httpTransport, jsonFactory, credentials)
+//            .setApplicationName("YourAppName")
+//            .build()
+//
+//        try {
+//            // Make the API call to retrieve the user's profile data, including the birthdate
+//            val person: Person = peopleService.people().get("people/me")
+//                .setPersonFields("birthdays")
+//                .execute()
+//
+//            return person.birthdays
+//        } catch (e: Exception) {
+//            // Handle exceptions or errors
+//            return null
+//        }
+//    }
     fun animateSignInBtnSuccessful(callback: () -> Unit){
         binding.loginBtn.isEnabled = false // Disable button
         binding.tickImageView.visibility = View.INVISIBLE
